@@ -13,7 +13,10 @@
     </bpmn:textAnnotation>
     <bpmn:association id="Association_1cbt050" associationDirection="None" sourceRef="Activity_1ylczbo" targetRef="TextAnnotation_1k347tz" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_088wtfo" name="testing" isExecutable="true"><bpmn:extensionElements><zeebe:versionTag value="1.0"></zeebe:versionTag></bpmn:extensionElements>
+  <bpmn:process id="Process_088wtfo" name="testing" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:versionTag value="1.0.1" />
+    </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1" name="Khách muốn mượn sách">
       <bpmn:outgoing>Flow_1k1rwpm</bpmn:outgoing>
     </bpmn:startEvent>
@@ -50,7 +53,6 @@
       <bpmn:lane id="Lane_0oeycte" name="Hệ thống">
         <bpmn:flowNodeRef>Activity_1therpw</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_161izpu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_15r7eyz</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:sequenceFlow id="Flow_1cm8w70" sourceRef="Event_0gsibjd" targetRef="Activity_0kpewoh" />
@@ -67,7 +69,6 @@
     <bpmn:task id="Activity_1therpw" name="Xuất phiếu mượn">
       <bpmn:incoming>Flow_0fyyb6q</bpmn:incoming>
       <bpmn:outgoing>Flow_0h822oj</bpmn:outgoing>
-      <bpmn:outgoing>Flow_19tvtcr</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="Activity_161izpu" name="Tạo phiếu mượn sách">
       <bpmn:incoming>Flow_028cyqe</bpmn:incoming>
@@ -83,13 +84,6 @@
       <bpmn:incoming>Flow_089k5in</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0fxcuvc" />
     </bpmn:intermediateThrowEvent>
-    <bpmn:callActivity id="Activity_15r7eyz" name="trả sách">
-      <bpmn:extensionElements>
-        <zeebe:calledElement processId="Process_0788ohq" propagateAllChildVariables="false" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_19tvtcr</bpmn:incoming>
-    </bpmn:callActivity>
-    <bpmn:sequenceFlow id="Flow_19tvtcr" sourceRef="Activity_1therpw" targetRef="Activity_15r7eyz" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_19dzlcw">
@@ -175,10 +169,6 @@
       <bpmndi:BPMNShape id="Event_19yrwak_di" bpmnElement="Event_0f8etza">
         <dc:Bounds x="902" y="432" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15r7eyz_di" bpmnElement="Activity_15r7eyz">
-        <dc:Bounds x="1050" y="720" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1cm8w70_di" bpmnElement="Flow_1cm8w70">
         <di:waypoint x="730" y="468" />
         <di:waypoint x="730" y="530" />
@@ -198,10 +188,6 @@
       <bpmndi:BPMNEdge id="Flow_089k5in_di" bpmnElement="Flow_089k5in">
         <di:waypoint x="920" y="530" />
         <di:waypoint x="920" y="468" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19tvtcr_di" bpmnElement="Flow_19tvtcr">
-        <di:waypoint x="970" y="760" />
-        <di:waypoint x="1050" y="760" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1k347tz_di" bpmnElement="TextAnnotation_1k347tz">
         <dc:Bounds x="540" y="80" width="150" height="70" />
