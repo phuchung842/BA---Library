@@ -1,4 +1,3 @@
-# BA---Library
 # Research Domain
 
 | Key | Content |
@@ -6,7 +5,7 @@
 | Domain | Quản lý thư sách trong thư viện |
 | Business Goal | Có thể giúp người quản lý thư viện có thể nắm được việc mượn và trà sách của mỗi người mà khồng cần ghi chú bằng giấy mà thông qua hệ thống. |
 | Stakeholders | Nhân viên quản lý thư việc |
-| Current Pain Points | Khi có quá nhiều người mượn hoặc trả sách không thể kiểm tra và những ghi chú bằng giấy dễ bị mất hoặc nhòe đi nếu bị ướt |
+| Current Pain Points | Khi có quá nhiều người mượn hoặc trả sách không thể kiểm tra và những ghi chú bằng giấy dễ bị mất hoac82 nhòe đi nếu bị ướt |
 | Key Concepts | Mượn sách, Trả sách, Cọc tiền, Tiền phạt, Tiền mượn sách, Phiếu mượn , Phiếu trả  |
 
 ## Glossary

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="b7cb967" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:collaboration id="Collaboration_19dzlcw" name="Luồng mượn sách">
+    <bpmn:participant id="Participant_01wb87n" name="Người mượn" processRef="Process_088wtfo" />
+    <bpmn:participant id="Participant_1bm3t4g" name="Thư viện" processRef="Process_13n4fs0" />
+    <bpmn:messageFlow id="Flow_1t5a6ts" sourceRef="Activity_1ylczbo" targetRef="Event_0gsibjd" />
+    <bpmn:messageFlow id="Flow_0ivmsza" sourceRef="Event_0f8etza" targetRef="Activity_1009ak7" />
+    <bpmn:textAnnotation id="TextAnnotation_1k347tz">
+      <bpmn:text>- Thông tin người mượn
+- Ngày mượn&#xa0;
+- Ngày trả
+- Mã sách trong thư viện</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1cbt050" associationDirection="None" sourceRef="Activity_1ylczbo" targetRef="TextAnnotation_1k347tz" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_088wtfo" name="testing" isExecutable="true"><bpmn:extensionElements><zeebe:versionTag value="1.0"></zeebe:versionTag></bpmn:extensionElements>
+    <bpmn:startEvent id="StartEvent_1" name="Khách muốn mượn sách">
+      <bpmn:outgoing>Flow_1k1rwpm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1k1rwpm" sourceRef="StartEvent_1" targetRef="Activity_0gxeibo" />
+    <bpmn:task id="Activity_0gxeibo" name="Chọn sách trong thư viện">
+      <bpmn:incoming>Flow_1k1rwpm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gas1lp</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_1pebpu6" name="Thực hiện việc mượn sách">
+      <bpmn:incoming>Flow_0gas1lp</bpmn:incoming>
+      <bpmn:outgoing>Flow_133nusw</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0gas1lp" sourceRef="Activity_0gxeibo" targetRef="Activity_1pebpu6" />
+    <bpmn:task id="Activity_1ylczbo" name="Cung cấp thông tin mượn sách cho thủ thư">
+      <bpmn:incoming>Flow_133nusw</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_133nusw" sourceRef="Activity_1pebpu6" targetRef="Activity_1ylczbo" />
+    <bpmn:task id="Activity_1009ak7" name="Nhận phiếu mượn sách">
+      <bpmn:outgoing>Flow_0zs03oo</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0zs03oo" sourceRef="Activity_1009ak7" targetRef="Event_1nalgu8" />
+    <bpmn:endEvent id="Event_1nalgu8" name="Khách mượn đến khi muốn trả">
+      <bpmn:incoming>Flow_0zs03oo</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="Process_13n4fs0" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_0fvmuif">
+      <bpmn:lane id="Lane_1ygjl87" name="Thủ thư">
+        <bpmn:flowNodeRef>Event_0gsibjd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0kpewoh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0etz0ry</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0f8etza</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0oeycte" name="Hệ thống">
+        <bpmn:flowNodeRef>Activity_1therpw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_161izpu</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_15r7eyz</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="Flow_1cm8w70" sourceRef="Event_0gsibjd" targetRef="Activity_0kpewoh" />
+    <bpmn:intermediateCatchEvent id="Event_0gsibjd">
+      <bpmn:outgoing>Flow_1cm8w70</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_127vk0p" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_0kpewoh" name="Nhận thông tin và tiến lập phiếu mượn cho khách">
+      <bpmn:incoming>Flow_1cm8w70</bpmn:incoming>
+      <bpmn:outgoing>Flow_028cyqe</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_028cyqe" sourceRef="Activity_0kpewoh" targetRef="Activity_161izpu" />
+    <bpmn:sequenceFlow id="Flow_0fyyb6q" sourceRef="Activity_161izpu" targetRef="Activity_1therpw" />
+    <bpmn:task id="Activity_1therpw" name="Xuất phiếu mượn">
+      <bpmn:incoming>Flow_0fyyb6q</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h822oj</bpmn:outgoing>
+      <bpmn:outgoing>Flow_19tvtcr</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_161izpu" name="Tạo phiếu mượn sách">
+      <bpmn:incoming>Flow_028cyqe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fyyb6q</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0h822oj" sourceRef="Activity_1therpw" targetRef="Activity_0etz0ry" />
+    <bpmn:task id="Activity_0etz0ry" name="Kiểm tra thông tin phiếu trước khi đưa cho khách">
+      <bpmn:incoming>Flow_0h822oj</bpmn:incoming>
+      <bpmn:outgoing>Flow_089k5in</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_089k5in" sourceRef="Activity_0etz0ry" targetRef="Event_0f8etza" />
+    <bpmn:intermediateThrowEvent id="Event_0f8etza">
+      <bpmn:incoming>Flow_089k5in</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fxcuvc" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:callActivity id="Activity_15r7eyz" name="trả sách">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="Process_0788ohq" propagateAllChildVariables="false" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_19tvtcr</bpmn:incoming>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="Flow_19tvtcr" sourceRef="Activity_1therpw" targetRef="Activity_15r7eyz" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_19dzlcw">
+      <bpmndi:BPMNShape id="Participant_01wb87n_di" bpmnElement="Participant_01wb87n" isHorizontal="true">
+        <dc:Bounds x="100" y="80" width="1200" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="150" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="235" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gxeibo_di" bpmnElement="Activity_0gxeibo">
+        <dc:Bounds x="280" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pebpu6_di" bpmnElement="Activity_1pebpu6">
+        <dc:Bounds x="480" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ylczbo_di" bpmnElement="Activity_1ylczbo">
+        <dc:Bounds x="680" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1009ak7_di" bpmnElement="Activity_1009ak7">
+        <dc:Bounds x="870" y="170" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nalgu8_di" bpmnElement="Event_1nalgu8">
+        <dc:Bounds x="1062" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1037" y="235" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1k1rwpm_di" bpmnElement="Flow_1k1rwpm">
+        <di:waypoint x="186" y="210" />
+        <di:waypoint x="280" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0gas1lp_di" bpmnElement="Flow_0gas1lp">
+        <di:waypoint x="380" y="210" />
+        <di:waypoint x="480" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_133nusw_di" bpmnElement="Flow_133nusw">
+        <di:waypoint x="580" y="210" />
+        <di:waypoint x="680" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zs03oo_di" bpmnElement="Flow_0zs03oo">
+        <di:waypoint x="970" y="210" />
+        <di:waypoint x="1062" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_1bm3t4g_di" bpmnElement="Participant_1bm3t4g" isHorizontal="true">
+        <dc:Bounds x="100" y="400" width="1200" height="450" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0oeycte_di" bpmnElement="Lane_0oeycte" isHorizontal="true">
+        <dc:Bounds x="130" y="660" width="1170" height="190" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1ygjl87_di" bpmnElement="Lane_1ygjl87" isHorizontal="true">
+        <dc:Bounds x="130" y="400" width="1170" height="260" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_14uwxkd_di" bpmnElement="Event_0gsibjd">
+        <dc:Bounds x="712" y="432" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kpewoh_di" bpmnElement="Activity_0kpewoh">
+        <dc:Bounds x="680" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1therpw_di" bpmnElement="Activity_1therpw">
+        <dc:Bounds x="870" y="720" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_161izpu_di" bpmnElement="Activity_161izpu">
+        <dc:Bounds x="680" y="720" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0etz0ry_di" bpmnElement="Activity_0etz0ry">
+        <dc:Bounds x="870" y="530" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19yrwak_di" bpmnElement="Event_0f8etza">
+        <dc:Bounds x="902" y="432" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15r7eyz_di" bpmnElement="Activity_15r7eyz">
+        <dc:Bounds x="1050" y="720" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1cm8w70_di" bpmnElement="Flow_1cm8w70">
+        <di:waypoint x="730" y="468" />
+        <di:waypoint x="730" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_028cyqe_di" bpmnElement="Flow_028cyqe">
+        <di:waypoint x="730" y="610" />
+        <di:waypoint x="730" y="720" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fyyb6q_di" bpmnElement="Flow_0fyyb6q">
+        <di:waypoint x="780" y="760" />
+        <di:waypoint x="870" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h822oj_di" bpmnElement="Flow_0h822oj">
+        <di:waypoint x="920" y="720" />
+        <di:waypoint x="920" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_089k5in_di" bpmnElement="Flow_089k5in">
+        <di:waypoint x="920" y="530" />
+        <di:waypoint x="920" y="468" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19tvtcr_di" bpmnElement="Flow_19tvtcr">
+        <di:waypoint x="970" y="760" />
+        <di:waypoint x="1050" y="760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1k347tz_di" bpmnElement="TextAnnotation_1k347tz">
+        <dc:Bounds x="540" y="80" width="150" height="70" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1t5a6ts_di" bpmnElement="Flow_1t5a6ts">
+        <di:waypoint x="730" y="250" />
+        <di:waypoint x="730" y="432" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ivmsza_di" bpmnElement="Flow_0ivmsza">
+        <di:waypoint x="920" y="432" />
+        <di:waypoint x="920" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1cbt050_di" bpmnElement="Association_1cbt050">
+        <di:waypoint x="696" y="170" />
+        <di:waypoint x="678" y="150" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
