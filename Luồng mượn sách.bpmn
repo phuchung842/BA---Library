@@ -19,7 +19,7 @@
   </bpmn:collaboration>
   <bpmn:process id="Process_088wtfo" name="testing" isExecutable="true">
     <bpmn:extensionElements>
-      <zeebe:versionTag value="1.0.2" />
+      <zeebe:versionTag value="1.0" />
     </bpmn:extensionElements>
     <bpmn:startEvent id="StartEvent_1" name="Khách muốn mượn sách">
       <bpmn:outgoing>Flow_1k1rwpm</bpmn:outgoing>
